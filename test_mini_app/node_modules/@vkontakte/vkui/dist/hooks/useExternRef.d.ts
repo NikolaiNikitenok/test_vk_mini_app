@@ -1,0 +1,2 @@
+import * as React from "react";
+export declare function useExternRef<T>(...externRefs: Array<React.Ref<T> | undefined | false>): React.MutableRefObject<T | null>;

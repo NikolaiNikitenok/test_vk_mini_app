@@ -1,0 +1,22 @@
+import * as React from "react";
+import { ChipsInputOption } from "../ChipsInput/ChipsInput";
+import { ChipsSelectProps } from "./ChipsSelect";
+export declare const useChipsSelect: <Option extends ChipsInputOption>(props: Partial<ChipsSelectProps<Option>>) => {
+    fieldValue: string | undefined;
+    handleInputChange: (e: React.ChangeEvent<HTMLInputElement> | undefined) => void;
+    opened: boolean;
+    setOpened: React.Dispatch<React.SetStateAction<boolean>>;
+    filteredOptions: Option[];
+    focusedOptionIndex: number | null;
+    setFocusedOptionIndex: React.Dispatch<React.SetStateAction<number | null>>;
+    focusedOption: Option | null;
+    setFocusedOption: React.Dispatch<React.SetStateAction<Option | null>>;
+    selectedOptions: Option[];
+    setFieldValue: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setSelectedOptions: React.Dispatch<React.SetStateAction<Option[]>>;
+    clearInput: () => void;
+    toggleOption: (newOption: Option, value?: boolean | undefined) => void;
+    addOption: (newOption: Option) => void;
+    addOptionFromInput: () => void;
+    removeOption: (value: string | number) => void;
+};
