@@ -1,2 +1,0 @@
-import { TapticVibrationPowerType } from "@vkontakte/vk-bridge";
-export declare function runTapticImpactOccurred(style: TapticVibrationPowerType): void;

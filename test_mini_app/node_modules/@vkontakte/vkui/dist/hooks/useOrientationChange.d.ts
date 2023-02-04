@@ -1,7 +1,0 @@
-declare type Orientation = "portrait" | "landscape";
-/**
- * Возвращает текущую ориентация экрана на человеческом языке.
- * Обновляется при изменении ориентации.
- */
-export declare function useOrientationChange(): Orientation;
-export {};
