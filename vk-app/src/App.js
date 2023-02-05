@@ -9,7 +9,7 @@ import {
   View,
   Panel,
   PanelHeader,
-  // Header,
+  Header,
   // Group,
   // SimpleCell,
   // Placeholder,
@@ -47,15 +47,15 @@ function App() {
           <SplitLayout header={!isVKCOM && <PanelHeader separator={false} />}>
             {viewWidth.tabletPlus && (
               <SplitCol width={280} className={viewWidth.tabletPlus.className}>
-                <Panel id="nav">Navigation</Panel>
+                <Header id="nav">Navigation</Header>
               </SplitCol>
             )}
             <SplitCol autoSpaced>
               <View activePanel="profile">
-                <Panel id="profile">Profile</Panel>
+                <Header id="profile">Profile</Header>
               </View>
             </SplitCol>
-          </SplitLayout>;
+          </SplitLayout>
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
