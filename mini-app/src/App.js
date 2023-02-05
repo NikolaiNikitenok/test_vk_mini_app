@@ -1,52 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import bridge from '@vkontakte/vk-bridge';
-import { View, ScreenSpinner, AdaptivityProvider, AppRoot, ConfigProvider, SplitLayout, SplitCol } from '@vkontakte/vkui';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {
+  AdaptivityProvider,
+  ConfigProvider,
+  AppRoot,
+  SplitLayout,
+  SplitCol,
+  View,
+  Panel,
+  PanelHeader,
+  Header,
+  Group,
+  SimpleCell,
+} from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
-import Home from './panels/Home';
-import Persik from './panels/Persik';
-
 const App = () => {
-	const [scheme, setScheme] = useState('bright_light')
-	const [activePanel, setActivePanel] = useState('home');
-	const [fetchedUser, setUser] = useState(null);
-	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
+  return (
+    <AppRoot>
+      <SplitLayout header={<PanelHeader separator={false} />}>
+        <SplitCol autoSpaced>
+          <View activePanel="main">
+            <Panel id="main">
+              <PanelHeader>VKUI</PanelHeader>
+              <Group header={<Header mode="secondary">Items</Header>}>
+                <SimpleCell>Hello</SimpleCell>
+                <SimpleCell>World</SimpleCell>
+              </Group>
+            </Panel>
+          </View>
+        </SplitCol>
+      </SplitLayout>
+    </AppRoot>
+  );
+};
 
-	useEffect(() => {
-		bridge.subscribe(({ detail: { type, data }}) => {
-			if (type === 'VKWebAppUpdateConfig') {
-				setScheme(data.scheme)
-			}
-		});
-
-		async function fetchData() {
-			const user = await bridge.send('VKWebAppGetUserInfo');
-			setUser(user);
-			setPopout(null);
-		}
-		fetchData();
-	}, []);
-
-	const go = e => {
-		setActivePanel(e.currentTarget.dataset.to);
-	};
-
-	return (
-		<ConfigProvider scheme={scheme}>
-			<AdaptivityProvider>
-				<AppRoot>
-					<SplitLayout popout={popout}>
-						<SplitCol>
-							<View activePanel={activePanel}>
-								<Home id='home' fetchedUser={fetchedUser} go={go} />
-								<Persik id='persik' go={go} />
-							</View>
-						</SplitCol>
-					</SplitLayout>
-				</AppRoot>
-			</AdaptivityProvider>
-		</ConfigProvider>
-	);
-}
+ReactDOM.render(
+  <ConfigProvider>
+    <AdaptivityProvider>
+      <App />
+    </AdaptivityProvider>
+  </ConfigProvider>,
+  document.getElementById('root'),
+);
 
 export default App;
