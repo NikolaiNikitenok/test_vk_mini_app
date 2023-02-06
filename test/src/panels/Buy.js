@@ -1,153 +1,148 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// import React, { useState, useEffect, usePlatform } from 'react';
+// import PropTypes from 'prop-types';
+// import bridge from '@vkontakte/vk-bridge';
+// import '@vkontakte/vkui/dist/vkui.css';
 
-import { Panel, PanelHeader, PanelHeaderBack, Header, Button, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
+// import { 
+//   AdaptivityProvider,
+//   Panel,
+//   PanelHeader,
+//   PanelHeaderBack,
+//   eader,
+//   Button,
+//   Group,
+//   Cell, 
+//   Div, 
+//   Avatar,
+//   Counter,
+//   FormItem,
+//   Select,
+//   Checkbox,
+//   Platform,
+//   View,
+//   PanelHeaderButton
+// } from '@vkontakte/vkui';
+
+// import {
+//   Icon12Tag,
+//   Icon12Add,
+//   Icon16Add,
+//   Icon24Add,
+//   Icon24ChevronCompactRight,
+
+// } from '@vkontakte/icons'
+
+// const Buy = () => {
+//   const [mode, setMode] = React.useState('all');
+//   const [menuOpened, setMenuOpened] = React.useState(false);
+//   const [selected, setSelected] = React.useState('news');
+
+//   return (
+//     <View activePanel="panel">
+//       <Panel id="panel">
+//         <PanelHeader
+//           before={
+//             <PanelHeaderButton>
+//               <Icon28CameraOutline />
+//             </PanelHeaderButton>
+//           }
+//           after={
+//             <PanelHeaderButton>
+//               <Icon28AddOutline />
+//             </PanelHeaderButton>
+//           }
+//         >
+//           <DefaultInPanel
+//             selected={selected}
+//             setSelected={setSelected}
+//             menuOpened={menuOpened}
+//             onMenuClick={(opened) => {
+//               setMenuOpened((prevState) => (opened ? !prevState : false));
+//             }}
+//           />
+//         </PanelHeader>
+
+//         {selected === 'news' && (
+//           <Group id="tab-content-news" aria-labelledby="tab-news" role="tabpanel">
+//             <Div>Контент новостей</Div>
+//           </Group>
+//         )}
+//         {selected === 'recommendations' && (
+//           <Group
+//             id="tab-content-recommendations"
+//             aria-labelledby="tab-recommendations"
+//             role="tabpanel"
+//           >
+//             <Div>Контент рекомендаций</Div>
+//           </Group>
+//         )}
+
+//         <Scrollable />
+
+//         <PanelHeaderContext opened={menuOpened} onClose={() => setMenuOpened(false)}>
+//           <List>
+//             <Cell
+//               before={<Icon28UsersOutline />}
+//               after={mode === 'all' && <Icon24Done fill="var(--vkui--color_icon_accent)" />}
+//               onClick={() => setMode('all')}
+//             >
+//               Communities
+//             </Cell>
+//             <Cell
+//               before={<Icon28SettingsOutline />}
+//               after={mode === 'managed' && <Icon24Done fill="var(--vkui--color_icon_accent)" />}
+//               onClick={() => setMode('managed')}
+//             >
+//               Managed Communities
+//             </Cell>
+//           </List>
+//         </PanelHeaderContext>
+//       </Panel>
+//     </View>
+//   );
+// };
+
+// const DefaultInPanel = ({ menuOpened, onMenuClick, selected, setSelected }) => {
+//   return (
+//     <Tabs>
+//       <TabsItem
+//         after={
+//           <Icon16Dropdown
+//             style={{
+//               transform: `rotate(${menuOpened ? '180deg' : '0'})`,
+//             }}
+//           />
+//         }
+//         selected={selected === 'news'}
+//         onClick={() => {
+//           if (selected === 'news') {
+//             onMenuClick(true);
+//           }
+//           setSelected('news');
+//         }}
+//         id="tab-news"
+//         aria-controls="tab-content-news"
+//       >
+//         Новости
+//       </TabsItem>
+//       <TabsItem
+//         selected={selected === 'recommendations'}
+//         onClick={() => {
+//           onMenuClick(false);
+//           setSelected('recommendations');
+//         }}
+//         id="tab-recommendations"
+//         aria-controls="tab-content-recommendations"
+//       >
+//         Интересное
+//       </TabsItem>
+//     </Tabs>
+//   );
+// };
 
 
-const Buy = () => {
-    const [align, setAlign] = useState('center');
-    const [appearance, setAppearance] = useState('accent');
-    const [sizeY, setSizeY] = useState('compact');
-    const [stretched, setStretched] = useState(false);
-    const [disabled, setDisabled] = useState(false);
-    const [size, setSize] = useState('s');
-    const [loading, setLoading] = useState(false);
-    const [addBefore, setAddBefore] = useState(false);
-    const [addAfter, setAddAfter] = useState(false);
-    const [addText, setAddText] = useState(true);
-    const [hasLink, setHasLink] = useState(false);
-    const platform = usePlatform();
-  
-    React.useEffect(() => {
-      if (platform === Platform.VKCOM) {
-        setSizeY('compact');
-      }
-    }, [platform]);
-  
-    const buttonBefore =
-      addBefore && (size === 's' ? <Icon12Add /> : size === 'm' ? <Icon16Add /> : <Icon24Add />);
-    const buttonAfter =
-      addAfter &&
-      (size === 's' ? (
-        <Icon12Tag />
-      ) : size === 'm' ? (
-        <Icon24ChevronCompactRight />
-      ) : (
-        <Counter>16</Counter>
-      ));
-    const buttonLink = hasLink ? '#' : undefined;
-    const buttonText = addText ? 'Button' : undefined;
-  
-    return (
-      <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-        <AdaptivityProvider sizeY={sizeY}>
-          <div
-            style={{
-              background: appearance === 'overlay' ? '#232323' : 'unset',
-              ...containerStyles,
-            }}
-          >
-            {['primary', 'secondary', 'tertiary', 'outline', 'link'].map((mode) => (
-              <Div key={mode}>
-                <Button
-                  align={align}
-                  href={buttonLink}
-                  before={buttonBefore}
-                  after={buttonAfter}
-                  appearance={appearance}
-                  stretched={stretched}
-                  mode={mode}
-                  disabled={disabled}
-                  size={size}
-                  loading={loading}
-                >
-                  {buttonText}
-                </Button>
-              </Div>
-            ))}
-          </div>
-        </AdaptivityProvider>
-        <div style={{ minWidth: 200 }}>
-          <FormItem top="appearance">
-            <Select
-              value={appearance}
-              onChange={(e) => setAppearance(e.target.value)}
-              options={[
-                { label: 'accent', value: 'accent' },
-                { label: 'positive', value: 'positive' },
-                { label: 'negative', value: 'negative' },
-                { label: 'neutral', value: 'neutral' },
-                { label: 'overlay', value: 'overlay' },
-                { label: 'accent-invariable', value: 'accent-invariable' },
-              ]}
-            />
-          </FormItem>
-          <FormItem top="size">
-            <Select
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
-              options={[
-                { label: 's', value: 's' },
-                { label: 'm', value: 'm' },
-                { label: 'l', value: 'l' },
-              ]}
-            />
-          </FormItem>
-          <FormItem top="align">
-            <Select
-              value={align}
-              onChange={(e) => setAlign(e.target.value)}
-              options={[
-                { label: 'left', value: 'left' },
-                { label: 'center', value: 'center' },
-                { label: 'right', value: 'right' },
-              ]}
-            />
-          </FormItem>
-          <FormItem top="sizeY">
-            <Select
-              value={sizeY}
-              onChange={(e) => setSizeY(e.target.value)}
-              options={[
-                { label: 'compact', value: 'compact' },
-                {
-                  label: 'regular',
-                  value: 'regular',
-                  disabled: platform === Platform.VKCOM,
-                },
-              ]}
-            />
-          </FormItem>
-          <FormItem top="props">
-            <Checkbox onChange={(e) => setStretched(e.target.checked)}>stretched</Checkbox>
-            <Checkbox onChange={(e) => setLoading(e.target.checked)}>loading</Checkbox>
-            <Checkbox onChange={(e) => setDisabled(e.target.checked)}>disabled</Checkbox>
-            <Checkbox
-              disabled={!(addBefore || addAfter)}
-              onChange={(e) => setAddText(e.target.checked)}
-              checked={addText}
-            >
-              add text
-            </Checkbox>
-            <Checkbox
-              disabled={!(addText || addAfter)}
-              onChange={(e) => setAddBefore(e.target.checked)}
-            >
-              add before
-            </Checkbox>
-            <Checkbox
-              disabled={!(addText || addBefore)}
-              onChange={(e) => setAddAfter(e.target.checked)}
-            >
-              add after
-            </Checkbox>
-            <Checkbox onChange={(e) => setHasLink(e.target.checked)}>add href</Checkbox>
-          </FormItem>
-        </div>
-      </div>
-    );
-  };
-  
-  <Buy/>;
+// <ConfigProvider webviewType="internal">
+//   <Buy />
+// </ConfigProvider>;
 
-  export default Buy
+//   export default Buy

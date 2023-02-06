@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Panel, PanelHeader, PanelHeaderBack, Header, Button, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
+import { Panel, PanelHeader, PanelHeaderBack, Header, Button, Group, Cell, Div, Avatar, Tabs, TabsItem } from '@vkontakte/vkui';
+import {Icon28SettingsOutline, Icon28LogoVk} from '@vkontakte/icons';
+
 
 const containerStyles = {
 	display: 'flex',
@@ -11,33 +13,44 @@ const containerStyles = {
   };
 
 const Home = ({ id, go}) => (
+	
 	<Panel id={id}>
-		<PanelHeader>Main Page</PanelHeader>
+		<PanelHeader left={<Icon28LogoVk/>}> NFT for Events
+			
+		</PanelHeader>
+		<Tabs>
+			<TabsItem selected>Главная</TabsItem>
+			{/* <TabsItem>Купить билеты</TabsItem> */}
+			<TabsItem>Мои билеты</TabsItem>
+			<TabsItem>Настройки</TabsItem>
+        </Tabs>
 
-		<Group header={<Header mode="secondary">Navigation</Header>}>
-			<Div>
-				<Button stretched size="l" appearance="positive" mode="secondary" onClick={go} data-to="home">
-					Main
-				</Button>
-				<br/>
-				<Button stretched size="l" mode="secondary" onClick={go} data-to="inventory">
-					Inventory
-				</Button>
-				<br/>
-				<Button stretched size="l" mode="secondary" onClick={go} data-to="buy">
-					Купить билеты
-				</Button>
-			</Div>
-		</Group>
-
+		{/* <Group header={<Header mode="secondary">Navigation</Header>}>
+			<div>
+				<Div>
+					<Button stretched size="l" appearance="positive" mode="secondary" onClick={go} data-to="home">
+						Main
+					</Button>
+					<br/>
+					<Button stretched size="l" mode="secondary" onClick={go} data-to="inventory">
+						Inventory
+					</Button>
+					<br/>
+					<Button stretched size="l" mode="secondary" onClick={go} data-to="buy">
+						Купить билеты
+					</Button>
+				</Div>
+			</div>
+		</Group> */}
+		<br/>
 		<Group header={<Header mode="secondary">Events</Header>}>
 			<Div>
-				<Button stretched size="l" appearance="positive" mode="secondary" onClick={go} data-to="home">
+				<Button stretched size="l" mode="secondary" onClick={go} data-to="home">
 					Купить билеты
 				</Button>
 				<br/>
 				<Button stretched size="l" mode="secondary" onClick={go} data-to="inventory">
-					Создать мероприятие
+					Подключить кошелек
 				</Button>
 			</Div>
 		</Group>
