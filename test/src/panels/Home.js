@@ -1,25 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
+import { Panel, PanelHeader, PanelHeaderBack, Header, Button, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
 
-const Home = ({ id, go, fetchedUser }) => (
+const containerStyles = {
+	display: 'flex',
+	flexDirection: 'column',
+	justifyContent: 'center',
+	width: '100%',
+  };
+
+const Home = ({ id, go}) => (
 	<Panel id={id}>
-		<PanelHeader>Example</PanelHeader>
-		{fetchedUser &&
-		<Group header={<Header mode="secondary">User Data Fetched with VK Bridge</Header>}>
-			<Cell
-				before={fetchedUser.photo_200 ? <Avatar src={fetchedUser.photo_200}/> : null}
-				description={fetchedUser.city && fetchedUser.city.title ? fetchedUser.city.title : ''}
-			>
-				{`${fetchedUser.first_name} ${fetchedUser.last_name}`}
-			</Cell>
-		</Group>}
+		<PanelHeader>Main Page</PanelHeader>
 
-		<Group header={<Header mode="secondary">Navigation Example</Header>}>
+		<Group header={<Header mode="secondary">Navigation</Header>}>
 			<Div>
-				<Button stretched size="l" mode="secondary" onClick={go} data-to="persik">
-					Show me the Persik, please!
+				<Button stretched size="l" appearance="positive" mode="secondary" onClick={go} data-to="home">
+					Main
+				</Button>
+				<br/>
+				<Button stretched size="l" mode="secondary" onClick={go} data-to="inventory">
+					Inventory
+				</Button>
+				<br/>
+				<Button stretched size="l" mode="secondary" onClick={go} data-to="buy">
+					Купить билеты
+				</Button>
+			</Div>
+		</Group>
+
+		<Group header={<Header mode="secondary">Events</Header>}>
+			<Div>
+				<Button stretched size="l" appearance="positive" mode="secondary" onClick={go} data-to="home">
+					Купить билеты
+				</Button>
+				<br/>
+				<Button stretched size="l" mode="secondary" onClick={go} data-to="inventory">
+					Создать мероприятие
 				</Button>
 			</Div>
 		</Group>
