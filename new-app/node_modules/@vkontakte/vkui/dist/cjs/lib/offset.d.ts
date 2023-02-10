@@ -1,0 +1,7 @@
+export interface OffsetRectInterface {
+    top: number | undefined;
+    left: number | undefined;
+    width: number | undefined;
+    height: number | undefined;
+}
+export declare function getOffsetRect(elem: HTMLElement | null): OffsetRectInterface;

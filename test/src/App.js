@@ -4,8 +4,11 @@ import { View, ScreenSpinner, AdaptivityProvider, AppRoot, ConfigProvider, Split
 import '@vkontakte/vkui/dist/vkui.css';
 
 import Home from './panels/Home';
-import Inventory from './panels/Persik';
+import Connect from './panels/Connect';
 import Buy from './panels/Buy'
+import Settings from './panels/Settings'
+import Inventory from './panels/Inventory'
+import Create from './panels/Create'
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
@@ -39,9 +42,13 @@ const App = () => {
 					<SplitLayout popout={popout}>
 						<SplitCol>
 							<View activePanel={activePanel}>
-								<Home id='home' go={go} />
-								<Inventory id='inventory' go={go} />
-								<Buy id='buy' go={go} />
+								<Home id='home' go={go}/>
+								<Connect id='connect' go={go}/>
+								<Buy id='buy' go={go}/>
+								<Settings id='settings' go={go}/>
+								<Inventory id='inventory' go={go}/>
+								<Create id='create' go={go}/>
+								<Buy id='Buy' go={go}/>
 							</View>
 						</SplitCol>
 					</SplitLayout>

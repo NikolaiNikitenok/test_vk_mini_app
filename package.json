@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@vkontakte/create-vk-mini-app": "^1.8.1"
+    "@vkontakte/create-vk-mini-app": "^1.8.1",
+    "new-app": "^0.2.1"
   }
 }
