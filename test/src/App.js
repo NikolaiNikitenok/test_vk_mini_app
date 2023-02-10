@@ -16,6 +16,17 @@ const App = () => {
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(null);
 
+	bridge.send('VKWebAppAddToFavorites')
+	.then((data) => { 
+		if (data.result) {
+		// Мини-приложение или игра добавлены в избранное
+		}
+	})
+	.catch((error) => {
+		// Ошибка
+		console.log(error);
+	});
+
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
 			if (type === 'VKWebAppUpdateConfig') {
