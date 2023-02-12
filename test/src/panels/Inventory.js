@@ -16,13 +16,18 @@ const Inventory = ({id, go}) => {
 			<Tabs>
 				<TabsItem onClick={go} data-to="home">Главная</TabsItem>
 				{/* <TabsItem>Купить билеты</TabsItem> */}
-				<TabsItem selected onClick={go} data-to="inventory">Мои билеты</TabsItem>
+				<TabsItem selected onClick={go} data-to="inventory">Мои мероприятия</TabsItem>
 				<TabsItem onClick={go} data-to="settings">Настройки</TabsItem>
 			</Tabs>
 			<Group header={<Header mode="secondary">Мои билеты</Header>}>
 
-                {/* Если пусто, то добавить кнопку для перехода в магазин билетов, иначе открыть панель с билетами. */}
-                Здесь пусто!
+				{/* Если пусто, то добавить кнопку для перехода в магазин билетов, иначе открыть панель с билетами. */}
+				<h2>Здесь пусто!</h2>
+			</Group>
+			<Group header={<Header mode="secondary">Созданные Мероприятия</Header>}>
+
+				{/* Если пусто, то добавить кнопку для перехода в магазин билетов, иначе открыть панель с билетами. */}
+				<h2>Здесь пусто!</h2>
 			</Group>
 		</Panel>
 	)

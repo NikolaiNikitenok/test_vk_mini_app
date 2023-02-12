@@ -11,7 +11,7 @@ const containerStyles = {
 	flexDirection: 'column',
 	justifyContent: 'center',
 	width: '100%',
-  };
+	};
 
 const Home = ({ id, go}) => {
 
@@ -32,7 +32,7 @@ const Home = ({ id, go}) => {
 						Главная
 					</TabsItem>
 					{/* <TabsItem>Купить билеты</TabsItem> */}
-					<TabsItem onClick={go} data-to="inventory">Мои билеты</TabsItem>
+					<TabsItem onClick={go} data-to="inventory">Мои Мероприятия</TabsItem>
 					<TabsItem onClick={go} data-to="settings">Настройки</TabsItem>
 				</Tabs>
 

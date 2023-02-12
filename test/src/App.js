@@ -4,7 +4,7 @@ import { View, ScreenSpinner, AdaptivityProvider, AppRoot, ConfigProvider, Split
 import '@vkontakte/vkui/dist/vkui.css';
 
 import Home from './panels/Home';
-import Connect from './panels/Connect';
+// import Connect from './panels/Connect';
 import Buy from './panels/Buy'
 import Settings from './panels/Settings'
 import Inventory from './panels/Inventory'
@@ -54,7 +54,7 @@ const App = () => {
 						<SplitCol>
 							<View activePanel={activePanel}>
 								<Home id='home' go={go}/>
-								<Connect id='connect' go={go}/>
+								{/* <Connect id='connect' go={go}/> */}
 								<Buy id='buy' go={go}/>
 								<Settings id='settings' go={go}/>
 								<Inventory id='inventory' go={go}/>
