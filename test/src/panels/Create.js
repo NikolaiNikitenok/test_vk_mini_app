@@ -22,9 +22,10 @@ import {
 	SegmentedControl, 
 	Textarea,
 	Checkbox,
-	Link
+	Link,
+	// unstable_TextTooltip as TextTooltip
 } from '@vkontakte/vkui';
-import {Icon28SettingsOutline, Icon28LogoVk} from '@vkontakte/icons';
+import {Icon28SettingsOutline, Icon28LogoVk, Icon20QuestionCircleFillViolet} from '@vkontakte/icons';
 
 const addressItems = [
   { label: 'Почтовый индекс', name: 'zip' },
@@ -34,16 +35,22 @@ const addressItems = [
 
 const Create = ({ id, go}) => {
 
+const [name, setName] = React.useState('');
 	const [email, setEmail] = React.useState('');
   const [purpose, setPurpose] = React.useState('');
   const [showPatronymic, setShowPatronymic] = React.useState(true);
+	const [quantity, setQuantity] = React.useState('')
+	const [symbol, setSymbol] = React.useState('')
 
   const onChange = (e) => {
     const { name, value } = e.currentTarget;
 
     const setStateAction = {
+			name: setName,
       email: setEmail,
       purpose: setPurpose,
+			quantity: setQuantity,
+			symbol: setSymbol,
     }[name];
 
     setStateAction && setStateAction(value);
@@ -63,7 +70,7 @@ const Create = ({ id, go}) => {
 
 
 					{/* Email */}
-					<FormItem
+					{/* <FormItem
 					top="E-mail"
 					status={email ? 'valid' : 'error'}
 					bottom={
@@ -71,21 +78,55 @@ const Create = ({ id, go}) => {
 					}
 					>
 					<Input type="email" name="email" value={email} onChange={onChange} />
+					</FormItem> */}
+
+					<FormItem
+					top="Название мероприятия"
+					status={symbol ? 'valid' : 'error'}
+					bottom={
+						symbol ? '' : 'Обязательное поле!'
+					}
+					>
+					<Input type="symbol" name="symbol" value={symbol} onChange={onChange} />
+					</FormItem>
+
+					<FormItem
+					top="Символ мероприятия"
+				
+					status={name ? 'valid' : 'error'}
+					bottom={
+						name ? '' : 'Обязательное поле!'
+					}
+					>
+					{/* <TextTooltip text="Желательно 3-5 символов!">
+						<Icon20QuestionCircleFillViolet/>
+					</TextTooltip> */}
+					<Input type="name" name="name" value={name} onChange={onChange} />
+					</FormItem>
+
+					<FormItem
+					top="Количество"
+					status={quantity ? 'valid' : 'error'}
+					bottom={
+						quantity ? '' : 'Обязательное поле!'
+					}
+					>
+					<Input type="number" name="quantity" value={quantity} onChange={onChange} />
 					</FormItem>
 
 
 					{/* ФИО */}
-					<FormLayoutGroup mode="horizontal">
+					{/* <FormLayoutGroup mode="horizontal">
 					<FormItem top="Имя">
 						<Input />
 					</FormItem>
 					<FormItem top="Фамилия">
 						<Input />
 					</FormItem>
-					</FormLayoutGroup>
+					</FormLayoutGroup> */}
 
 					{/* Дополнительное поле: Отчество */}
-					{!showPatronymic ? (
+					{/* {!showPatronymic ? (
 					<CellButton onClick={onShowPatronymic}>Указать отчество</CellButton>
 					) : (
 					<FormItem
@@ -96,11 +137,11 @@ const Create = ({ id, go}) => {
 					>
 						<Input />
 					</FormItem>
-					)}
+					)} */}
 
 
 					{/* Пол */}
-					<FormItem top="Пол">
+					{/* <FormItem top="Пол">
 					<Select
 						placeholder="Выберите пол"
 						options={[
@@ -114,7 +155,7 @@ const Create = ({ id, go}) => {
 						},
 						]}
 					/>
-					</FormItem>
+					</FormItem> */}
 
 
 					{/* Документ */}
@@ -125,11 +166,11 @@ const Create = ({ id, go}) => {
 						options={[
 						{
 							label: 'Оффлайн',
-							value: 'offline',
+							value: 'False',
 						},
 						{
 							label: 'Онлайн',
-							value: 'online',
+							value: 'True',
 						},
 						]}
 					/>
@@ -137,12 +178,12 @@ const Create = ({ id, go}) => {
 					
 
 					{/* Выпадающий список */}
-					{addressItems.map(({ label, name }) => (
+					{/* {addressItems.map(({ label, name }) => (
 					<FormItem top={label} key={name}>
 						<Input name={name} />
 					</FormItem>
-					))}
-					<FormItem
+					))} */}
+					{/* <FormItem
 					top="Тип мероприятия"
 					bottom={purpose ? '' : 'Пожалуйста, укажите тип вашего мероприятия'}
 					// status={purpose ? 'valid' : 'error'}
@@ -171,12 +212,12 @@ const Create = ({ id, go}) => {
 						},
 						]}
 					/>
-					</FormItem>
+					</FormItem> */}
 					<FormItem top="Коротко о мероприятии">
 					<Textarea />
 					</FormItem>
-					<Checkbox>
-					Согласен на <Link>обработку личных данных</Link>
+					<Checkbox checked disabled>
+					Согласен с <Link onClick={go} data-to="privacy">политикой конфиденциальности</Link>
 					</Checkbox>
 					<FormItem>
 					<Button size="l" stretched>

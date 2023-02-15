@@ -9,6 +9,7 @@ import Buy from './panels/Buy'
 import Settings from './panels/Settings'
 import Inventory from './panels/Inventory'
 import Create from './panels/Create'
+import Privacy from './panels/privacy'
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
@@ -55,11 +56,11 @@ const App = () => {
 							<View activePanel={activePanel}>
 								<Home id='home' go={go}/>
 								{/* <Connect id='connect' go={go}/> */}
-								<Buy id='buy' go={go}/>
 								<Settings id='settings' go={go}/>
 								<Inventory id='inventory' go={go}/>
 								<Create id='create' go={go}/>
-								<Buy id='Buy' go={go}/>
+								<Buy id='buy' go={go}/>
+								<Privacy id='privacy' go={go}/>
 							</View>
 						</SplitCol>
 					</SplitLayout>

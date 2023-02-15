@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
-import { Panel, PanelHeader, PanelHeaderBack, Header, Button, Group, Cell, Div, Avatar, Tabs, TabsItem, List, Footer} from '@vkontakte/vkui';
+import { Panel, PanelHeader, PanelHeaderBack, Header, Button, Group, Cell, Div, Avatar, Tabs, TabsItem, List, Footer, PopoutWrapper} from '@vkontakte/vkui';
 import {Icon28SettingsOutline, Icon28LogoVk} from '@vkontakte/icons';
 
 
@@ -54,7 +54,7 @@ const Home = ({ id, go}) => {
 					</div>
 				</Group> */}
 				<br/>
-				<Group header={<Header mode="secondary">Мероприятия</Header>}>
+				<Group header={<Header mode="secondary">Мероприятия</Header> }>
 					<Div>
 						<Button stretched size="l" mode="secondary" onClick={go} data-to="buy">
 							Купить билеты
@@ -63,6 +63,9 @@ const Home = ({ id, go}) => {
 						<Button stretched size="l" mode="secondary" onClick={go} data-to="create">
 							Создать мероприятие
 						</Button>
+						{/* <PopoutWrapper alignY="center" alignX="center">
+							Some content
+						</PopoutWrapper>; */}
 					</Div>
 				</Group>
 				
