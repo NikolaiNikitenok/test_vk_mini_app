@@ -1,2 +1,0 @@
-import * as React from "react";
-export declare const isRefObject: <T, E = Element>(refObject: T | React.RefObject<E>) => refObject is React.RefObject<E>;

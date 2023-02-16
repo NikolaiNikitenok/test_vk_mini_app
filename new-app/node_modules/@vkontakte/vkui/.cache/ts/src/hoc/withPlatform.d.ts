@@ -1,3 +1,0 @@
-import * as React from "react";
-import { HasPlatform } from "../types";
-export declare function withPlatform<T extends HasPlatform>(Component: React.ComponentType<T>): React.FC<Omit<T, keyof HasPlatform>>;

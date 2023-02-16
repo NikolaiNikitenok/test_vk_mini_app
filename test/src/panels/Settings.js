@@ -36,6 +36,7 @@ const Settings = ({id, go}) => {
   const [isConnected, setIsConnected] = useState(false);
   const [ethBalance, setEthBalance] = useState("");
   const [ethAcc, setEthAcc] = useState('');
+  const [ethAdd, setEthAdd] = useState('');
   const [popout, setPopout] = useState(null);
   const clearPopout = () => setPopout(null);
 
@@ -82,7 +83,156 @@ const Settings = ({id, go}) => {
       console.log(err);
     }
   }
-  
+
+  const connectContract = async () => {
+    const ABI = [
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_discription",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_supply",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "_format",
+            "type": "bool"
+          }
+        ],
+        "name": "createEvent",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "inputs": [],
+        "name": "addressStor",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_id",
+            "type": "uint256"
+          }
+        ],
+        "name": "addressTiket",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "incidents",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "fabric",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supply",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "discription",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "format",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "ticketCollection",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]
+
+
+    const Address = "0x14A0cc3D250631032c0A1E91036E817adDec51C1";
+    setEthAdd(Address)
+    window.web3 = await new Web3(window.ethereum);
+    window.contract = await new window.web3.eth.Contract( ABI, Address); 
+    // document.getElementById("contractArea").innerHTML = "Connected to smart-contract";
+  }
+
+
+
   const onDisconnect = () => {
     setIsConnected(false);
   }
@@ -127,27 +277,47 @@ const Settings = ({id, go}) => {
       </Tabs>
       <Group className="app-wrapper" header={<Header mode="secondary">Подключение MetaMask</Header>}>
         {!isConnected && (
-          <div>
+          <Div>
             <br/>
             <Button className="app-button__login" stretched size="l" mode="secondary" onClick={onConnect}>
             Подключить MetaMask
             </Button>
-          </div>
+          </Div>
         )}
       
         {isConnected && (
           <Div className="app-wrapper">
             <div className="app-details">
               <h2> Вы подключились к MetaMask.</h2>
-              <div className="app-balance">
-                <span>Баланс: </span>
-                {ethBalance / (10**18)}
-              </div>
-              <div>
-                <span>Адрес: </span>
-                {ethAcc}
-              </div>
+              <Group header={<Header mode="secondary">Информация</Header>}>
+                <Div>
+                  <div className="app-balance">
+                    <span>Баланс Кошелька: </span>
+                    {ethBalance / (10**18)}
+                  </div>
+                  <br/>
+                  <div>
+                    <span>Адрес Кошелька: </span>
+                    {ethAcc}
+                  </div>
+                  <br/>
+                  {/* <div>
+                    <span>Адрес Контракта: </span>
+                    {ethAdd}
+                  </div> */}
+                </Div>
+              </Group>
+
+              <br/>
+              
+              <Button stretched size="l" mode="secondary" onClick={connectContract}>
+                  Подключиться к контракту
+              </Button>
+              
             </div>
+
+            <br/>
+
             <div>
               <Button className="app-buttons__logout" stretched size="l" mode="secondary" onClick={onDisconnect}>
               Отключиться

@@ -1,2 +1,0 @@
-import { BrowserInfo } from "../lib/browser";
-export declare function useBrowserInfo(): BrowserInfo;
