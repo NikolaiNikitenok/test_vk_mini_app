@@ -7,7 +7,7 @@ import {Icon28SettingsOutline, Icon28LogoVk, Icon16Done} from '@vkontakte/icons'
 import Web3 from 'web3';
 // import WalletConnectProvider from '@walletconnect/web3-provider';
 
-import './Persik.css';
+// import './Persik.css';
 
 const Settings = ({id, go}) => {
 	// const [userAccount, setUserAccount] = useState(null);
@@ -38,18 +38,18 @@ const Settings = ({id, go}) => {
   const [ethBalance, setEthBalance] = useState("");
   const [ethAcc, setEthAcc] = useState('');
   const [ethAdd, setEthAdd] = useState('');
-  const [popout, setPopout] = useState(null);
-  const clearPopout = () => setPopout(null);
+  // const [popout, setPopout] = useState(null);
+  // const clearPopout = () => setPopout(null);
 
-  const setDoneScreenSpinner = () => {
-    setPopout(<ScreenSpinner state="loading" />);
+  // const setDoneScreenSpinner = () => {
+  //   setPopout(<ScreenSpinner state="loading" />);
   
-    setTimeout(() => {
-      setPopout(<ScreenSpinner state="done" aria-label="Успешно" />);
+  //   setTimeout(() => {
+  //     setPopout(<ScreenSpinner state="done" aria-label="Успешно" />);
   
-      setTimeout(clearPopout, 1000);
-    }, 2000);
-  };
+  //     setTimeout(clearPopout, 1000);
+  //   }, 2000);
+  // };
   
   const detectCurrentProvider = () => {
     let provider;
@@ -76,7 +76,7 @@ const Settings = ({id, go}) => {
         console.log(account);
         // setDoneScreenSpinner();
         setEthBalance(ethBalance);
-        setEthAcc(account)
+        setEthAcc(account);
         setIsConnected(true);
         
       }
@@ -267,7 +267,7 @@ const Settings = ({id, go}) => {
 		// 	</Group>
 		// </Panel>
 
-    <Panel className="app">
+    <Panel>
       <PanelHeader left={<Icon28LogoVk/>}> NFT for Events
 			
       </PanelHeader>

@@ -421,25 +421,28 @@ const Create = ({ id, go}) => {
 
 
 	return (
+		
 		<Panel id={id}>
 			<PanelHeader left={<PanelHeaderBack onClick={go} data-to="home"/>}> 
 				Создание мероприятия
 			</PanelHeader>
 			{!isConnected && !isCreated && (
-				<Div>
-					<br/>
-					<Button className="app-button__login" stretched size="l" mode="secondary" onClick={onConnect}>
-					Подключить MetaMask
-					</Button>
-				</Div>
+				// <Div>
+				// 	<br/>
+				// 	<Button className="app-button__login" stretched size="l" mode="secondary" onClick={onConnect}>
+				// 	Подключить MetaMask
+				// 	</Button>
+				// </Div>
+				onConnect
 			)}
 			{isConnected && !walletIsConnected && !isCreated && (
-				<Div>
-					<br/>
-					<Button stretched size="l" mode="secondary" onClick={connectContract}>
-						Подключиться к контракту
-					</Button>
-				</Div>
+				// <Div>
+				// 	<br/>
+				// 	<Button stretched size="l" mode="secondary" onClick={connectContract}>
+				// 		Подключиться к контракту
+				// 	</Button>
+				// </Div>
+				connectContract
 			)}
 
 			{isConnected && walletIsConnected && !isCreated && (
