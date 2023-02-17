@@ -34,6 +34,7 @@ const Settings = ({id, go}) => {
 	// };
     
   const [isConnected, setIsConnected] = useState(false);
+  const [walletIsConnected, setWalletIsConnected] = useState(false);
   const [ethBalance, setEthBalance] = useState("");
   const [ethAcc, setEthAcc] = useState('');
   const [ethAdd, setEthAdd] = useState('');
@@ -229,6 +230,7 @@ const Settings = ({id, go}) => {
     window.web3 = await new Web3(window.ethereum);
     window.contract = await new window.web3.eth.Contract( ABI, Address); 
     // document.getElementById("contractArea").innerHTML = "Connected to smart-contract";
+    setWalletIsConnected(true)
   }
 
 
@@ -301,10 +303,12 @@ const Settings = ({id, go}) => {
                     {ethAcc}
                   </div>
                   <br/>
-                  {/* <div>
-                    <span>Адрес Контракта: </span>
-                    {ethAdd}
-                  </div> */}
+                  {walletIsConnected && (
+                    <div>
+                      <span>Адрес Контракта: </span>
+                      {ethAdd}
+                    </div>
+                  )}
                 </Div>
               </Group>
 
