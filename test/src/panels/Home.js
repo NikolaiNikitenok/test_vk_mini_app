@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 
 import { 
 	Panel, 
@@ -40,6 +40,9 @@ const Home = ({ id, go}) => {
 
 	const [fetching, setFetching] = React.useState(false);
 
+	// Сосотояния пользователей
+	const [userInWhiteList, setUserInWhiteList] = useState(true)
+
 
 	// Состояния страниц
 
@@ -48,12 +51,21 @@ const Home = ({ id, go}) => {
 	const [createPage, setCreatePage] = useState(false)
 	const [settingsPage, setSettingsPage] = useState(false)
 	const [inventoryPage, setInventoryPage] = useState(false)
+
+	const [showGroup, setShowGroup] = useState(false)
 	
 
 	// const initUsers = getRandomUsers(10);
 	// console.log(initUsers)
 
-	
+	// Состояние мероприятия
+	const [nameEvent, setNameEvent] = useState('')
+	const [formatEvent, setFormatEvent] = useState('')
+	const [descriptionEvent, setDescriptionEvent] = useState('')
+	const [quantityEvent, setQuantityEvent] = useState(0)
+
+	const allEvents = 6
+	let fragmentEvent = null
 
 	// Функции сосотояния страниц
 	const setHomeBuy = () => {
@@ -100,6 +112,11 @@ const Home = ({ id, go}) => {
 	const [format, setFormat] = React.useState(false);
 
 	const [isCreated, setIsCreated] = useState(false);
+
+
+	// Создание блока с разметкой для сущ мероприятий
+
+	const [plusBlock, setPlusBlock] = useState([])
 	
 
   const onChange = (e) => {
@@ -306,6 +323,106 @@ const Home = ({ id, go}) => {
 
 	}
 
+	const showEvent = async () => {
+		// Цикл по проходу всех мероприятий
+		// let copy = Object.assign([], plusBlock)
+		let copy = []
+
+		for (let i=1; i<allEvents; i++) {
+
+			const newer = await window.contract.methods.incidents(i).call({ from: ethAcc });
+			console.log(newer)
+			setNameEvent(newer['name'])
+			// const parsedEvent = JSON.parse(newer);
+			{newer['format'] && (
+				setFormatEvent('Онлайн')
+			)}
+			{!newer['format'] && (
+				setFormatEvent('Оффлайн')
+			)}
+			// setQuantityEvent(newer['supply'])
+			// setDescriptionEvent(newer['discription'])
+			
+			// Отрисовка
+			
+
+			const miniBlock = (
+				<Div key={i} style={{
+					border: "white 2px solid",
+					borderRadius: "20px",
+					margin: "20px"
+					}}>
+					<Div>
+						<h2>
+							{newer['name']}
+						</h2>
+					</Div>
+					<Div>
+						<span>Кол-во билетов: </span>
+						{newer['supply']}
+					</Div>
+					<Div>
+						<span>Формат мероприятия: </span>
+						{newer['format'] && (
+							<span>Онлайн</span>
+						)}
+						{!newer['format'] && (
+							<span>Оффлайн</span>
+						)}
+					</Div>
+					<Div>
+						<span>Описание: </span>
+						{newer['discription']}	
+						
+					</Div>
+					
+					<Button stretched size="l" mode="secondary">Купить</Button>
+				</Div>
+			)
+
+			copy.push(miniBlock)
+			
+
+
+			// showBlocks(nameEvent, formatEvent, quantityEvent, descriptionEvent)
+			
+		}
+
+		
+		setPlusBlock(copy)
+
+		setShowGroup(true)
+	}
+
+	// const showBlocks = async (n, f, q, d) => { 
+	// 	const miniBlock = (
+	// 		<Group header={<Header mode="secondary">Список билетов</Header>}>
+	// 			<Div>
+	// 				<Group header={<Header mode="secondary">{n}</Header>}>
+	// 					<Div>
+	// 						<span>Кол-во билетов: </span>
+	// 						{q}
+	// 					</Div>
+	// 					<Div>
+	// 						<span>Формат мероприятия: </span>
+	// 						{f}
+	// 					</Div>
+	// 					<Div>
+	// 						<span>Описание: </span>
+	// 						{d}
+	// 					</Div>
+	// 				</Group>
+	// 			</Div>
+	// 		</Group>
+	// 	)
+	// 	setPlusBlock(miniBlock)
+	
+	// }
+
+	const addBlockEvent = (block) => {
+
+	}
+
 	const onDisconnect = () => {
     setIsConnected(false);
   }
@@ -345,7 +462,44 @@ const Home = ({ id, go}) => {
 		
 			)}
 
+			{buyPage && (
+				<Panel id={id}>
+				<PanelHeader left={<PanelHeaderBack onClick={setHomeBuy}/>}> 
+					Покупка билетов
+				</PanelHeader>
+				{userInWhiteList && !showGroup && (
+					<Button onClick={showEvent}>
+						Показать мероприятия
+					</Button>
+				)}
+
+				{showGroup && (<>
+					
+					<Group header={<Header mode="secondary">Список билетов</Header>}>
+						<Div>
+								{plusBlock}	
+							{/* <Group header={<Header mode="secondary">{nameEvent}</Header>}>
+								<Div>
+									<span>Кол-во билетов: </span>
+									{quantityEvent}
+								</Div>
+								<Div>
+									<span>Формат мероприятия: </span>
+									{formatEvent}
+								</Div>
+								<Div>
+									<span>Описание: </span>
+									{descriptionEvent}
+								</Div>
+							</Group> */}
+						</Div>
+					</Group>
+					</>
+				)}
+			</Panel>
+			)}
 			
+
 			{/* Создание Мероприятия */}
 			{createPage && !homePage && (
 				<Panel>
@@ -364,6 +518,8 @@ const Home = ({ id, go}) => {
 		
 					{isConnected && walletIsConnected && !isCreated && (
 						<Group>
+							{/* <Button onClick={show}/> */}
+
 							<FormLayout>
 
 								{/* Название */}
@@ -553,21 +709,14 @@ const Home = ({ id, go}) => {
 					</Group>
 					<Group header={<Header mode="secondary">Созданные Мероприятия</Header>}>
 		
-						{/* Если пусто, то добавить кнопку для перехода в магазин билетов, иначе открыть панель с билетами. */}
+						{/* Если пусто, то добавить кнопку для перехода в конструктор билетов, иначе открыть панель с билетами. */}
 						<h2>Здесь пусто!</h2>
 					</Group>
 				</Panel>
 			)}
 
 
-			{buyPage && (
-				<Panel id={id}>
-				<PanelHeader left={<PanelHeaderBack onClick={setHomeBuy}/>}> 
-								Покупка билетов
-				</PanelHeader>
-				
-			</Panel>
-			)}
+			
 
 			</>
 	);
