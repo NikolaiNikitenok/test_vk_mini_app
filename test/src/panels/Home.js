@@ -27,6 +27,9 @@ import {
 } from '@vkontakte/vkui';
 import {Icon28SettingsOutline, Icon28LogoVk} from '@vkontakte/icons';
 import Web3 from 'web3';
+import ReactDOM from "react-dom";
+import QRCode from "react-qr-code";
+
 
 const timestamp = require('unix-timestamp');
 
@@ -38,6 +41,10 @@ const containerStyles = {
 	};
 
 const Home = ({ id, go}) => {
+
+	const [popout, setPopout] = useState(null);
+
+	const clearPopout = () => setPopout(null);
 
 	const [fetching, setFetching] = React.useState(false);
 
@@ -273,6 +280,19 @@ const Home = ({ id, go}) => {
 		{
 			"inputs": [],
 			"name": "countTic",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "date",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -633,6 +653,7 @@ const Home = ({ id, go}) => {
 
 	const [plusBlock, setPlusBlock] = useState([])
 	const [plusMyBlock, setPlusMyBlock] = useState([])
+	const [plusMyBought, setPlusMyBought] = useState([])
 	
 
   const onChange = (e) => {
@@ -652,6 +673,10 @@ const Home = ({ id, go}) => {
     setStateAction && setStateAction(value);
   };
 
+	const setCancelableScreenSpinner = () => {
+		setPopout(<ScreenSpinner state="cancelable" onClick={clearPopout} />);
+	};
+
 	// Коннекты кошелька и контракта
 
 	const detectCurrentProvider = () => {
@@ -670,8 +695,215 @@ const Home = ({ id, go}) => {
     try {
       const currentProvider = detectCurrentProvider();
 			const ABI = 
-				[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"addressStor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"collections","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"countEvent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_symbol","type":"string"},{"internalType":"string","name":"_discription","type":"string"},{"internalType":"uint256","name":"_supply","type":"uint256"},{"internalType":"bool","name":"_format","type":"bool"},{"internalType":"address[]","name":"_whiteList","type":"address[]"},{"internalType":"uint256","name":"_date","type":"uint256"}],"name":"createEvent","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"eventLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"incidents","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"fabric","type":"address"},{"internalType":"uint256","name":"supply","type":"uint256"},{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"symbol","type":"string"},{"internalType":"string","name":"discription","type":"string"},{"internalType":"bool","name":"format","type":"bool"},{"internalType":"address","name":"ticketCollection","type":"address"},{"internalType":"uint256","name":"date","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"listEvent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]
+			[
+				{
+				 "inputs": [
+					{
+					 "internalType": "string",
+					 "name": "_name",
+					 "type": "string"
+					},
+					{
+					 "internalType": "string",
+					 "name": "_symbol",
+					 "type": "string"
+					},
+					{
+					 "internalType": "string",
+					 "name": "_discription",
+					 "type": "string"
+					},
+					{
+					 "internalType": "uint256",
+					 "name": "_supply",
+					 "type": "uint256"
+					},
+					{
+					 "internalType": "bool",
+					 "name": "_format",
+					 "type": "bool"
+					},
+					{
+					 "internalType": "address[]",
+					 "name": "_whiteList",
+					 "type": "address[]"
+					},
+					{
+					 "internalType": "uint256",
+					 "name": "_date",
+					 "type": "uint256"
+					}
+				 ],
+				 "name": "createEvent",
+				 "outputs": [
+					{
+					 "internalType": "address",
+					 "name": "",
+					 "type": "address"
+					}
+				 ],
+				 "stateMutability": "nonpayable",
+				 "type": "function"
+				},
+				{
+				 "inputs": [],
+				 "stateMutability": "nonpayable",
+				 "type": "constructor"
+				},
+				{
+				 "inputs": [],
+				 "name": "addressStor",
+				 "outputs": [
+					{
+					 "internalType": "address",
+					 "name": "",
+					 "type": "address"
+					}
+				 ],
+				 "stateMutability": "view",
+				 "type": "function"
+				},
+				{
+				 "inputs": [
+					{
+					 "internalType": "uint256",
+					 "name": "",
+					 "type": "uint256"
+					}
+				 ],
+				 "name": "collections",
+				 "outputs": [
+					{
+					 "internalType": "address",
+					 "name": "",
+					 "type": "address"
+					}
+				 ],
+				 "stateMutability": "view",
+				 "type": "function"
+				},
+				{
+				 "inputs": [],
+				 "name": "countEvent",
+				 "outputs": [
+					{
+					 "internalType": "uint256",
+					 "name": "",
+					 "type": "uint256"
+					}
+				 ],
+				 "stateMutability": "view",
+				 "type": "function"
+				},
+				{
+				 "inputs": [],
+				 "name": "eventLength",
+				 "outputs": [
+					{
+					 "internalType": "uint256",
+					 "name": "",
+					 "type": "uint256"
+					}
+				 ],
+				 "stateMutability": "view",
+				 "type": "function"
+				},
+				{
+				 "inputs": [
+					{
+					 "internalType": "uint256",
+					 "name": "",
+					 "type": "uint256"
+					}
+				 ],
+				 "name": "incidents",
+				 "outputs": [
+					{
+					 "internalType": "uint256",
+					 "name": "id",
+					 "type": "uint256"
+					},
+					{
+					 "internalType": "address",
+					 "name": "from",
+					 "type": "address"
+					},
+					{
+					 "internalType": "address",
+					 "name": "fabric",
+					 "type": "address"
+					},
+					{
+					 "internalType": "uint256",
+					 "name": "supply",
+					 "type": "uint256"
+					},
+					{
+					 "internalType": "string",
+					 "name": "name",
+					 "type": "string"
+					},
+					{
+					 "internalType": "string",
+					 "name": "symbol",
+					 "type": "string"
+					},
+					{
+					 "internalType": "string",
+					 "name": "discription",
+					 "type": "string"
+					},
+					{
+					 "internalType": "bool",
+					 "name": "format",
+					 "type": "bool"
+					},
+					{
+					 "internalType": "address",
+					 "name": "ticketCollection",
+					 "type": "address"
+					},
+					{
+					 "internalType": "uint256",
+					 "name": "date",
+					 "type": "uint256"
+					},
+					{
+					 "internalType": "uint256",
+					 "name": "len",
+					 "type": "uint256"
+					}
+				 ],
+				 "stateMutability": "view",
+				 "type": "function"
+				},
+				{
+				 "inputs": [
+					{
+					 "internalType": "address",
+					 "name": "",
+					 "type": "address"
+					},
+					{
+					 "internalType": "uint256",
+					 "name": "",
+					 "type": "uint256"
+					}
+				 ],
+				 "name": "listEvent",
+				 "outputs": [
+					{
+					 "internalType": "uint256",
+					 "name": "",
+					 "type": "uint256"
+					}
+				 ],
+				 "stateMutability": "view",
+				 "type": "function"
+				}
+			 ]
 
+			 
       if(currentProvider) {
         
         await currentProvider.request({method: 'eth_requestAccounts'});
@@ -685,7 +917,7 @@ const Home = ({ id, go}) => {
         setEthAcc(account)
         setIsConnected(true);
       
-				const Address = "0xfdB65353B3F59Da0D96763e0BF36524697d84203";
+				const Address = "0x848b865795171B0b93De2264c5fceD109f6C4Eae";
 				setEthAdd(Address)
 				window.web3 = await new Web3(window.ethereum);
 				window.contract = await new window.web3.eth.Contract(ABI, Address);
@@ -731,6 +963,9 @@ const Home = ({ id, go}) => {
 
 
 		await window.contract.methods.createEvent(name, symbol, description, quantity, format, whiteList, date).send({ from: ethAcc });
+
+		// setCancelableScreenSpinner();
+		
 		setIsCreated(true);
 
 	}
@@ -754,8 +989,8 @@ const Home = ({ id, go}) => {
 					setUserInWhiteList(true)
 				)}
 			console.log(userInWhiteList)
-			// const lenRem = await window.contractDochka.methods.lenWhite().call({ from: ethAcc });
-			// console.log(lenRem)
+			const lenRem = newer['len']
+			console.log(lenRem)
 			// {!lenRem && (
 
 			// )}
@@ -813,12 +1048,12 @@ const Home = ({ id, go}) => {
 							{rem && (
 								<Button style={{backgroundColor: "blue"}} stretched size="l" mode="secondary" onClick={() => buyNft(newer['ticketCollection'])}>Купить</Button>
 							)}
-							{/* {!rem && lenRem > 0(
+							{!rem && lenRem > 0 && (
 								<Button stretched size="l" mode="secondary">Купить</Button>
 							)}
-							{!rem && lenRem == 0(
+							{!rem && lenRem == 0 && (
 								<Button style={{backgroundColor: "purple"}} stretched size="l" mode="secondary" onClick={() => buyNft(newer['ticketCollection'])}>Купить</Button>
-							)} */}
+							)}
 					</Div>
 			)
 
@@ -932,95 +1167,100 @@ const Home = ({ id, go}) => {
 
 
 	const showBoughtEvent = async () => {
-		let cop = []
+		let proofUrl = 'https://vk.com/app51559018#';
 
-		for (let i=1; i<=countEventik; i++) {
+		let cop = [];
+		console.log(cop)
 
-			const newer = await window.contract.methods.incidents(i).call({ from: ethAcc });
+		// for (let g=1; g <=countEventik; i++) {
+		// 	const newer = await window.contract.methods.incidents(i).call({ from: ethAcc });
+		// }
 
-			window.contractDochka = await new window.web3.eth.Contract(abiCollection, newer['ticketCollection']);
-			const rem = await window.contractDochka.methods.whteList(ethAcc).call({ from: ethAcc });
-				{rem && (
-					setUserInWhiteList(true)
-				)}
+		for (let i=0; i<=countEventik-1; i++) {
+			console.log(i)
+			const contr = await window.contract.methods.collections(i).call({ from: ethAcc });
+
+			const proofUrlTrue = proofUrl + ethAcc + '/' + contr
+			
+
+			window.contractDochka = await new window.web3.eth.Contract(abiCollection, contr);
+			const prov = await window.contractDochka.methods.balanceOf(ethAcc).call({ from: ethAcc });
+			const rem = await window.contractDochka.methods.remainingTickets().call({ from: ethAcc });
+			console.log(prov)
+			if (prov != 0) {
 
 				
+				// cop.push(newer)
+				console.log(proofUrlTrue)
+
 				
-
-				// console.log(rem)
+				const nameBought = await window.contractDochka.methods.name().call({ from: ethAcc });
 				
-
-
-				// console.log(newer)
-				// setNameEvent(newer['name'])
-				// const parsedEvent = JSON.parse(newer);
-				// {newer['format'] && (
-				// 	setFormatEvent('Онлайн')
-				// )}
-				// {!newer['format'] && (
-				// 	setFormatEvent('Оффлайн')
-				// )}
-				// setQuantityEvent(newer['supply'])
-				// setDescriptionEvent(newer['discription'])
+				const myDate = await window.contractDochka.methods.date().call({ from: ethAcc });
+				var myDates = new Date( myDate *1000)
 				
 				// Отрисовка
-				
-				const miniBlock = (
-						<Div key={i} style={{
-							border: "white 2px solid",
-							borderRadius: "20px",
-							margin: "20px"
-							}}>
-							<Div>
-								<h2>
-									{newer['name']}
-								</h2>
-							</Div>
-							<Div>
-								<span>Кол-во билетов: </span>
-								{newer['supply']}
-							</Div>
-							{/* <Div>
-								<span>WhiteList </span>
-								{newer['whiteList']}
-							</Div> */}
-							<Div>
-								<span>Формат мероприятия: </span>
-								{newer['format'] && (
-									<span>Онлайн</span>
-								)}
-								{!newer['format'] && (
-									<span>Оффлайн</span>
-								)}
-							</Div>
-							<Div>
-								<span>Описание: </span>
-								{newer['discription']}	
-								
-							</Div>
-							<Div>
-								<span>Оставшиеся билеты: </span>
-								{rem}	
-								
-							</Div>
-							<Div>
-
-								{/* {() => remainingTick(newer['ticketCollection'])} */}
-								
-							</Div>
-							
-							{/* <Button stretched size="l" mode="secondary" onClick={() => remainingTick(newer['ticketCollection'])}>Показать Оставшиеся</Button> */}
-						</Div>
-				)
-
-				cop.push(miniBlock)
 			
+			
+
+				const miniBlockBought = (
+				<Div key={i} style={{
+					border: "white 2px solid",
+					borderRadius: "20px",
+					margin: "20px",
+					display: "flex"
+					}}>
+					<Div >
+						<Div>
+							<h2>
+								{nameBought}
+							</h2>
+						</Div>
+						<Div>
+							<span>Кол-во билетов: </span>
+							{prov}
+						</Div>
+						{/* <Div>
+							<span>WhiteList </span>
+							{newer['whiteList']}
+						</Div> */}
+						<Div>
+							<span>Адрес контракта: </span>
+							{contr}
+						</Div>
+						<Div>
+							<span>Дата: </span>
+							{myDates.getDate() + '/' + myDates.getMonth() + '/' + myDates.getFullYear()}
+							
+						</Div>
+						<Div>
+							<span>Оставшиеся билеты: </span>
+							{rem}	
+							
+						</Div>
+						<Div>
+							{/* <span> Ссылка на проверку владения: </span> */}
+
+						</Div>
+						{/* <Button stretched size="l" mode="secondary" onClick={() => remainingTick(newer['ticketCollection'])}>Показать Оставшиеся</Button> */}
+					</Div>
+						<QRCode
+						style={{width: '170px'}}
+						value={proofUrlTrue}
+					>
+					</QRCode>
+					</Div>
+				)
+				cop.push(miniBlockBought)
 
 			}
-			// showBlocks(nameEvent, formatEvent, quantityEvent, descriptionEvent)
-			
 
-		setPlusMyBlock(cop)
+		}
+			// showBlocks(nameEvent, formatEvent, quantityEvent, descriptionEvent)
+		setPlusMyBought(cop)	
+
+		
+	
 	}
 
 	// const showBlocks = async (n, f, q, d) => { 
@@ -1107,6 +1347,9 @@ const Home = ({ id, go}) => {
 							<Button stretched size="l" mode="secondary" onClick={setHomeCreate}>
 								Создать мероприятие
 							</Button>
+							{/* <Button stretched size="l" mode="secondary" onClick={test}>
+								pobebritb
+							</Button> */}
 						</Div>
 					</Group>
 				</Panel>
@@ -1376,28 +1619,43 @@ const Home = ({ id, go}) => {
 			{/* Инвентарь */}
 
 			{inventoryPage && (
-				<Panel>
-					<PanelHeader left={<Icon28LogoVk/>}> NFT for Events
-					
-					</PanelHeader>
-					<Tabs>
-						<TabsItem onClick={setHomeInventory}>Главная</TabsItem>
-						{/* <TabsItem>Купить билеты</TabsItem> */}
-						<TabsItem selected>Мои мероприятия</TabsItem>
-						<TabsItem onClick={setSettingsInventory}>Настройки</TabsItem>
-					</Tabs>
-					<br/>
-					<Group header={<Header mode="secondary">Мои билеты</Header>}>
-		
-						{/* Если пусто, то добавить кнопку для перехода в магазин билетов, иначе открыть панель с билетами. */}
-						<h2>Здесь пусто!</h2>
-					</Group>
-					<Group header={<Header mode="secondary">Созданные Мероприятия</Header>}>
-						<Button stretched size="l" mode="secondary" onClick={showMyEvent}>Показать</Button>
-						{plusMyBlock}
-						{/* {console.log(plusMyBlock)} */}
-					</Group>
-				</Panel>
+				
+					<Panel>
+						<PanelHeader left={<Icon28LogoVk/>}> NFT for Events
+						
+						</PanelHeader>
+						<Tabs>
+							<TabsItem onClick={setHomeInventory}>Главная</TabsItem>
+							{/* <TabsItem>Купить билеты</TabsItem> */}
+							<TabsItem selected>Мои мероприятия</TabsItem>
+							<TabsItem onClick={setSettingsInventory}>Настройки</TabsItem>
+						</Tabs>
+						<br/>
+						{!isConnected && (
+							<Group header={<Header mode="secondary">Подключите MetaMask</Header>}>
+								<br/>
+								<Button className="app-button__login" stretched size="l" mode="secondary" onClick={onConnect}>
+								Подключить MetaMask
+								</Button>
+							</Group>
+						)}
+						{isConnected && (<>
+							<Group header={<Header mode="secondary">Мои билеты</Header>}>
+								<Div>
+									<Button stretched size="l" mode="secondary" onClick={showBoughtEvent}>Показать купленные</Button>
+									{/* Если пусто, то добавить кнопку для перехода в магазин билетов, иначе открыть панель с билетами. */}
+									{plusMyBought}
+									</Div>
+							</Group>
+							<Group header={<Header mode="secondary">Созданные Мероприятия</Header>}>
+								<Button stretched size="l" mode="secondary" onClick={showMyEvent}>Показать</Button>
+								{plusMyBlock}
+								{/* {console.log(plusMyBlock)} */}
+							</Group>
+						</>
+						)}
+					</Panel>
+
 			)}
 
 
